@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Students{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Students</h2>
+        <div>
+            {% if app.user != null %}
+                <a href="{{ url('student_create') }}" class="btn btn-primary float-right mb-2"><i class="fa fa-plus" aria-hidden="true"></i> Add Student</a>
+            {% endif %}
+        </div>
+        {% if students %}
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Classroom</th>
+                    {% if app.user !=null %}
+                        <th scope="col">Options</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for student in students %}
+                    <td>{{ student.name }}</td>
+                    <td><img src="{{ asset('uploads/images/'~student.image )}}" alt="" width="100" height="100%"></td>
+                    <td>{{ student.age }}</td>
+                    <td>{{ student.classroom.name }}</td>
+                    <td>
+                        {% if app.user !=null %}
+                            <a href="{{path('student_edit', {id: student.id}) }}" class="btn btn-secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                            <a href="{{ path('student_delete', {id: student.id}) }}" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            {% else %}
+            <p>There is no student records, Click Add Student to insert new one</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

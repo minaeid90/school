@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classrooms{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Classrooms</h2>
+        <div>
+            {% if app.user != null %}
+                <a href="{{ url('classroom_create') }}" class="btn btn-primary float-right mb-2"><i class="fa fa-plus" aria-hidden="true"></i> Add Classroom</a>
+            {% endif %}
+        </div>
+        {% if classrooms %}
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    {% if app.user !=null %}
+                        <th scope="col">Options</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for classroom in classrooms %}
+                    <td>{{ classroom.name }}</td>
+                    <td>
+                        {% if app.user !=null %}
+                            <a href="{{path('classroom_edit', {id: classroom.id}) }}" class="btn btn-secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                            <a href="{{path('classroom_delete', {id: classroom.id}) }}" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>There is no classroom records, Click Add Classrom to insert new one</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

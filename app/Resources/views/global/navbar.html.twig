@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">Schooly</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    {% set route = app.request.get('_route') %}
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {{ route == 'homepage'? 'active' }}">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item {{ route == 'student'? 'active' }}">
+                <a class="nav-link " href="{{ url('student') }}">Students</a>
+            </li>
+            <li class="nav-item {{ route == 'classroom'? 'active' }}">
+                <a class="nav-link" href="{{ url('classroom') }}">Classrooms</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            {% if app.user != null %}
+                <li class   ="nav-item">
+                    <a class="nav-link" href="{{ url('logout') }}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('register') }}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
